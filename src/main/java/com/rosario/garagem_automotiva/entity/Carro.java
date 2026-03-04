@@ -73,4 +73,14 @@ public class Carro {
     public Cliente getCliente() {
         return cliente;
     }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void marcarComoVendido(Vendedor vendedor) {
+        this.vendedor = vendedor;
+        this.dataVenda = LocalDate.now();
+    }
+
 }
