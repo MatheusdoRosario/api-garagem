@@ -1,5 +1,8 @@
 package com.rosario.garagem_automotiva.dto;
 
-public record CadastroVendedorDTO(String nome,
-                                  String telefone) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
+public record CadastroVendedorDTO(@NotBlank String nome,
+                                  @Pattern(regexp = "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$") String telefone) {
 }

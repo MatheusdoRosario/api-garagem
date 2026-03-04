@@ -1,5 +1,6 @@
 package com.rosario.garagem_automotiva.entity;
 
+import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -34,12 +35,12 @@ public class Carro {
     public Carro() {
     }
 
-    public Carro(Double valor, String modelo, MarcaCarro marcaCarro, int ano, String placa) {
-        this.valor = valor;
-        this.modelo = modelo;
-        this.marcaCarro = marcaCarro;
-        this.ano = ano;
-        this.placa = placa;
+    public Carro(CadastroCarroDTO dto) {
+        this.valor = dto.valor();
+        this.modelo = dto.modelo();
+        this.marcaCarro = dto.marcaCarro();
+        this.ano = dto.ano();
+        this.placa = dto.placa();
     }
 
     public UUID getId() {
