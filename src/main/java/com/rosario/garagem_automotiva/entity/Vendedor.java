@@ -1,5 +1,6 @@
 package com.rosario.garagem_automotiva.entity;
 
+import com.rosario.garagem_automotiva.dto.CadastroVendedorDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,9 +22,9 @@ public class Vendedor {
     public Vendedor() {
     }
 
-    public Vendedor(String nome, String telefone) {
-        this.nome = nome;
-        this.telefone = telefone;
+    public Vendedor(CadastroVendedorDTO dto) {
+        this.nome = dto.nome();
+        this.telefone = dto.telefone();
     }
 
     public Long getId() {
