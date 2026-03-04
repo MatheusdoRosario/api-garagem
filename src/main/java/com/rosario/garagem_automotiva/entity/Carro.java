@@ -2,6 +2,7 @@ package com.rosario.garagem_automotiva.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -11,7 +12,7 @@ public class Carro {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String nome;
+    private Double valor;
 
     private String modelo;
 
@@ -22,14 +23,19 @@ public class Carro {
 
     private String placa;
 
+    private LocalDate dataVenda;
+
     @ManyToOne
     private Cliente cliente;
+
+    @ManyToOne
+    private Vendedor vendedor;
 
     public Carro() {
     }
 
-    public Carro(String nome, String modelo, MarcaCarro marcaCarro, int ano, String placa) {
-        this.nome = nome;
+    public Carro(Double valor, String modelo, MarcaCarro marcaCarro, int ano, String placa) {
+        this.valor = valor;
         this.modelo = modelo;
         this.marcaCarro = marcaCarro;
         this.ano = ano;
@@ -40,8 +46,8 @@ public class Carro {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public Double getValor() {
+        return valor;
     }
 
     public String getModelo() {
@@ -58,5 +64,13 @@ public class Carro {
 
     public String getPlaca() {
         return placa;
+    }
+
+    public LocalDate getDataVenda() {
+        return dataVenda;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 }
