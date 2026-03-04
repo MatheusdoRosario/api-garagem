@@ -22,6 +22,9 @@ public class Carro {
 
     private String placa;
 
+    @ManyToOne
+    private Cliente cliente;
+
     public Carro() {
     }
 
