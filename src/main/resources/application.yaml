@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: garagem-automotiva
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:5432/garagemdb
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    mongodb:
+      uri: mongodb://${DB_HOST}:27017
+      database: garagem_imagens
+
+server:
+  port: 8080
+
