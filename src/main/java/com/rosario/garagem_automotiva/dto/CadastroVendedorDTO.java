@@ -1,6 +1,5 @@
 package com.rosario.garagem_automotiva.dto;
 
-public record VendedorDTO(Long id,
-                          String nome,
-                          String telefone) {
+public record CadastroVendedorDTO(String nome,
+                                  String telefone) {
 }
