@@ -1,6 +1,7 @@
 package com.rosario.garagem_automotiva.entity;
 
 import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
+import com.rosario.garagem_automotiva.dto.CarroDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public class Carro {
 
     private LocalDate dataVenda;
 
+    private Boolean vendido;
+
     @ManyToOne
     private Cliente cliente;
 
@@ -41,6 +44,17 @@ public class Carro {
         this.marcaCarro = dto.marcaCarro();
         this.ano = dto.ano();
         this.placa = dto.placa();
+        this.vendido = false;
+    }
+
+    public void atualizarCarro(CarroDTO dto) {
+        this.id = dto.uuid();
+        this.valor = dto.valor();
+        this.modelo = dto.modelo();
+        this.marcaCarro = dto.marcaCarro();
+        this.ano = dto.ano();
+        this.placa = dto.placa();
+        this.vendido = dto.vendido();
     }
 
     public UUID getId() {
@@ -82,6 +96,7 @@ public class Carro {
     public void marcarComoVendido(Vendedor vendedor) {
         this.vendedor = vendedor;
         this.dataVenda = LocalDate.now();
+        this.vendido = true;
     }
 
 }
