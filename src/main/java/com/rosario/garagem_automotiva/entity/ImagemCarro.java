@@ -1,5 +1,8 @@
 package com.rosario.garagem_automotiva.entity;
 
+import com.rosario.garagem_automotiva.dto.CadastroImagemCarroDTO;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,8 +14,9 @@ import java.util.UUID;
 public class ImagemCarro {
 
     @Id
-    private String id;
-    private UUID carroId; // referência ao carro no Postgres
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    private UUID carroId;
     private String url;
     private LocalDateTime uploadDate;
     private Map<String, String> metadata;
@@ -20,14 +24,14 @@ public class ImagemCarro {
     public ImagemCarro() {
     }
 
-    public ImagemCarro(UUID carroId, String url, Map<String, String> metadata) {
-        this.carroId = carroId;
-        this.url = url;
-        this.metadata = metadata;
+    public ImagemCarro(CadastroImagemCarroDTO dto) {
+        this.carroId = dto.carroId();
+        this.url = dto.url();
+        this.metadata = dto.metadata();
         this.uploadDate = LocalDateTime.now();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
