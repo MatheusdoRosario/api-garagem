@@ -4,6 +4,7 @@ import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroDTO;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class Carro {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Double valor;
+    private BigDecimal valor;
 
     private String modelo;
 
@@ -61,7 +62,7 @@ public class Carro {
         return id;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
