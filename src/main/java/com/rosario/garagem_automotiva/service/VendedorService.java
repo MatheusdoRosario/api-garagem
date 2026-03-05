@@ -28,7 +28,8 @@ public class VendedorService {
     private CarroRepository carroRepository;
 
     public Page<VendedorDTO> listarVendedores(Pageable pageable) {
-        return vendedorRepository.findByAtivo(true);
+        return vendedorRepository.findByAtivo(true)
+                .map(VendedorDTO::new);
     }
 
     @Transactional

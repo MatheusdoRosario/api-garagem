@@ -1,6 +1,7 @@
 package com.rosario.garagem_automotiva.dto;
 
 import com.rosario.garagem_automotiva.entity.Carro;
+import com.rosario.garagem_automotiva.entity.Manutencao;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,4 +13,8 @@ public record ManutencaoDTO(@NotBlank UUID id,
                             @NotBlank String descricao,
                             @NotBlank LocalDate data,
                             @NotNull Carro carro) {
+
+    public ManutencaoDTO(Manutencao manutencao) {
+        this(manutencao.getId(), manutencao.getValor(), manutencao.getDescricao(), manutencao.getData(), manutencao.getCarro());
+    }
 }

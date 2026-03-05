@@ -13,11 +13,11 @@ import java.util.UUID;
 
 public interface CarroRepository extends JpaRepository<Carro, UUID> {
 
-    Page<Carro> findByModelo(String modelo, Pageable pageable);
+    Page<Carro> findByModeloAndVendido(String modelo, boolean vendido, Pageable pageable);
 
-    Page<Carro> findByMarca(MarcaCarro marcaCarro, Pageable pageable);
+    Page<Carro> findByMarcaAndVendido(MarcaCarro marcaCarro, boolean vendido, Pageable pageable);
 
-    Page<Carro> findByAno(int ano, Pageable pageable);
+    Page<Carro> findByAnoAndVendido(int ano, boolean vendido,Pageable pageable);
 
     Page<Carro> findByVendido(boolean vendido, Pageable pageable);
 

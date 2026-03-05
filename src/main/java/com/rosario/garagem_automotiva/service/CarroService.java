@@ -42,7 +42,7 @@ public class CarroService {
     }
 
     public Page<CarroResponseDTO> ListarCarroPorModelo(String modelo, Pageable pageable) {
-        return carroRepository.findByModelo(modelo, pageable)
+        return carroRepository.findByModeloAndVendido(modelo, false, pageable)
                 .map(carro -> {
                     List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
                     return new CarroResponseDTO(carro, imagens);
@@ -50,7 +50,7 @@ public class CarroService {
     }
 
     public Page<CarroResponseDTO> ListarCarroPorMarca(MarcaCarro marcaCarro, Pageable pageable) {
-        return carroRepository.findByMarca(marcaCarro, pageable)
+        return carroRepository.findByMarcaAndVendido(marcaCarro, false,pageable)
                 .map(carro -> {
                     List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
                     return new CarroResponseDTO(carro, imagens);
@@ -58,7 +58,7 @@ public class CarroService {
     }
 
     public Page<CarroResponseDTO> ListarCarroPorAno(int ano, Pageable pageable) {
-        return carroRepository.findByAno(ano, pageable)
+        return carroRepository.findByAnoAndVendido(ano, false, pageable)
                 .map(carro -> {
                     List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
                     return new CarroResponseDTO(carro, imagens);
