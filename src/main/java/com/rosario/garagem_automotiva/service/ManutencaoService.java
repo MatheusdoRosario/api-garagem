@@ -37,4 +37,11 @@ public class ManutencaoService {
         Manutencao manutencao = repository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Manutencão não encontrada!"));
         manutencao.atualizarManutencao(dto);
     }
+
+    public void excluirManutencao(UUID uuid) {
+        if (!repository.existsById(uuid)) {
+            throw new ValidacaoException("Manutenção não encontrada!");
+        }
+        repository.deleteById(uuid);
+    }
 }
