@@ -28,7 +28,7 @@ public class VendedorService {
     private CarroRepository carroRepository;
 
     public Page<VendedorDTO> listarVendedores(Pageable pageable) {
-        return vendedorRepository.findByAtivo(true)
+        return vendedorRepository.findByAtivo(true, pageable)
                 .map(VendedorDTO::new);
     }
 
@@ -37,7 +37,7 @@ public class VendedorService {
                 .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
 
         List<Carro> carrosVendidos = carroRepository
-                .findByVendedorAndDataVendaBetween(vendedor, inicio.atStartOfDay(), fim.atTime(23,59));
+                .findByVendedorAndDataVendaBetween(vendedor, inicio, fim);
 
         int quantidade = carrosVendidos.size();
         BigDecimal valorTotal = carrosVendidos.stream()
@@ -79,7 +79,7 @@ public class VendedorService {
             throw new ValidacaoException("Vendedor já ativado!");
         }
         Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
-        vendedor.desativarVendedor(vendedor);
+        vendedor.ativarVendedor(vendedor);
     }
 
 }

@@ -16,20 +16,20 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/manutencoes")
 public class ManutencaoController {
 
     @Autowired
     private ManutencaoService service;
 
-    @GetMapping("/id")
-    public ResponseEntity<Page<ManutencaoDTO>> listarPorCarroId(@RequestBody UUID carroId, @RequestBody Pageable pageable) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Page<ManutencaoDTO>> listarPorCarroId(@PathVariable UUID carroId, Pageable pageable) {
         Page<ManutencaoDTO> manutencoes = service.listarManutencoesPorCarroId(carroId, pageable);
         return ResponseEntity.ok(manutencoes);
     }
 
     @GetMapping("/periodo")
-    public ResponseEntity<Page<ManutencaoDTO>> listarPorPeriodo(@RequestBody LocalDate inicio, @RequestBody LocalDate fim, @RequestBody Pageable pageable) {
+    public ResponseEntity<Page<ManutencaoDTO>> listarPorPeriodo(@RequestParam LocalDate inicio, @RequestParam LocalDate fim, Pageable pageable) {
         Page<ManutencaoDTO> manutencoes = service.listarManutencoesPorUmPeriodo(inicio, fim, pageable);
         return ResponseEntity.ok(manutencoes);
     }

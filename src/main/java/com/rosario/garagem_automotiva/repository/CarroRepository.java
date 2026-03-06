@@ -7,21 +7,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public interface CarroRepository extends JpaRepository<Carro, UUID> {
 
-    Page<Carro> findByModeloAndVendido(String modelo, boolean vendido, Pageable pageable);
+    Page<Carro> findByModeloContainingIgnoreCaseAndVendido(String modelo, boolean vendido, Pageable pageable);
 
-    Page<Carro> findByMarcaAndVendido(MarcaCarro marcaCarro, boolean vendido, Pageable pageable);
+    Page<Carro> findByMarcaCarroAndVendido(MarcaCarro marcaCarro, boolean vendido, Pageable pageable);
 
     Page<Carro> findByAnoAndVendido(int ano, boolean vendido,Pageable pageable);
 
     Page<Carro> findByVendido(boolean vendido, Pageable pageable);
 
-    List<Carro> findByVendedorAndDataVendaBetween(Vendedor vendedor, LocalDateTime inicio, LocalDateTime fim);
+    List<Carro> findByVendedorAndDataVendaBetween(Vendedor vendedor, LocalDate inicio, LocalDate fim);
 
 
 }

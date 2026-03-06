@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,9 +35,6 @@ public class Carro {
 
     @ManyToOne
     private Vendedor vendedor;
-
-    @OneToMany(mappedBy = "carro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ImagemCarro> imagens;
 
     public Carro() {
     }
@@ -100,10 +96,6 @@ public class Carro {
 
     public Boolean getVendido() {
         return vendido;
-    }
-
-    public List<ImagemCarro> getImagens() {
-        return imagens;
     }
 
     public void marcarComoVendido(Vendedor vendedor) {

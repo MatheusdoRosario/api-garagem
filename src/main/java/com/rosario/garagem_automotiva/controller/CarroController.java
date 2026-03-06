@@ -3,6 +3,7 @@ package com.rosario.garagem_automotiva.controller;
 import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroResponseDTO;
+import com.rosario.garagem_automotiva.dto.VenderCarroDTO;
 import com.rosario.garagem_automotiva.entity.MarcaCarro;
 import com.rosario.garagem_automotiva.exception.ValidacaoException;
 import com.rosario.garagem_automotiva.service.CarroService;
@@ -14,35 +15,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
-@RequestMapping("/api/v1/carro")
+@RequestMapping("/api/v1/carros")
 public class CarroController {
 
     @Autowired
     private CarroService service;
 
     @GetMapping
-    public ResponseEntity<Page<CarroResponseDTO>> listarTodos(@RequestBody Pageable pageable) {
+    public ResponseEntity<Page<CarroResponseDTO>> listarTodos(Pageable pageable) {
         Page<CarroResponseDTO> carrosDisponiveis = service.listarTodos(pageable);
         return ResponseEntity.ok(carrosDisponiveis);
     }
 
-    @GetMapping("/modelo")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorModelo(@RequestBody String modelo, @RequestBody Pageable pageable) {
+    @GetMapping("/modelo/{modelo}")
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorModelo(@PathVariable String modelo, Pageable pageable) {
             Page<CarroResponseDTO> carrosPorModelo = service.listarCarroPorModelo(modelo, pageable);
             return ResponseEntity.ok(carrosPorModelo);
     }
 
-    @GetMapping("/marca")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorMarca(@RequestBody MarcaCarro marcaCarro, @RequestBody Pageable pageable) {
+    @GetMapping("/marca/{marcaCarro}")
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorMarca(@PathVariable MarcaCarro marcaCarro, Pageable pageable) {
             Page<CarroResponseDTO> carrosPorMarca = service.listarCarroPorMarca(marcaCarro, pageable);
             return ResponseEntity.ok(carrosPorMarca);
     }
 
-    @GetMapping("/ano")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorAno(@RequestBody int ano, @RequestBody Pageable pageable) {
+    @GetMapping("/ano/{ano}")
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorAno(@PathVariable int ano, Pageable pageable) {
             Page<CarroResponseDTO> carrosPorAno = service.listarCarroPorAno(ano, pageable);
             return ResponseEntity.ok(carrosPorAno);
     }
@@ -64,9 +63,9 @@ public class CarroController {
     }
 
     @PutMapping("/vender")
-    public ResponseEntity<String> marcarComoVendido(@RequestBody @Valid UUID carroId, @RequestBody @Valid Long vendedorId) {
+    public ResponseEntity<String> marcarComoVendido(@RequestBody @Valid VenderCarroDTO dto) {
         try {
-            service.marcarComoVendido(carroId, vendedorId);
+            service.marcarComoVendido(dto.carroId(), dto.vendedorId());
             return ResponseEntity.ok().body("Carro vendido!");
         } catch (ValidacaoException e) {
             return ResponseEntity.notFound().build();

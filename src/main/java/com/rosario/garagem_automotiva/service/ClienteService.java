@@ -18,12 +18,12 @@ public class ClienteService {
     private ClienteRepository repository;
 
     public Page<ClienteDTO> listarClientesPorNome(String nome, Pageable pageable) {
-        return repository.findByNome(nome, pageable)
+        return repository.findByNomeContainingIgnoreCase(nome, pageable)
                 .map(ClienteDTO::new);
     }
 
     public Page<ClienteDTO> listarClientesPorTelefone(String telefone, Pageable pageable) {
-        return repository.findByTelefone(telefone, pageable)
+        return repository.findByTelefoneContaining(telefone, pageable)
                 .map(ClienteDTO::new);
     }
 
@@ -37,7 +37,7 @@ public class ClienteService {
 
     @Transactional
     public void atualizarCliente(ClienteDTO dto) {
-        if (repository.existsByTelefone(dto.telefone())) {
+        if (repository.existsByTelefoneAndIdNot(dto.telefone(), dto.id())) {
             throw new ValidacaoException("Telefone já cadastrado");
         }
         Cliente cliente = repository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Cliente não encontrado!"));

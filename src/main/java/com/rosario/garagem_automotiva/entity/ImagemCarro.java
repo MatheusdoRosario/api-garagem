@@ -1,10 +1,7 @@
 package com.rosario.garagem_automotiva.entity;
 
 import com.rosario.garagem_automotiva.dto.CadastroImagemCarroDTO;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -14,23 +11,23 @@ import java.util.UUID;
 public class ImagemCarro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
+
+    private UUID carroId;
     private String url;
     private LocalDateTime uploadDate;
 
-    @ManyToOne
-    private Carro carro;
 
     public ImagemCarro() {
     }
 
     public ImagemCarro(CadastroImagemCarroDTO dto) {
+        this.carroId = dto.carroId();
         this.url = dto.url();
         this.uploadDate = LocalDateTime.now();
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
@@ -42,7 +39,7 @@ public class ImagemCarro {
         return uploadDate;
     }
 
-    public Carro getCarro() {
-        return carro;
+    public UUID getCarroId() {
+        return carroId;
     }
 }

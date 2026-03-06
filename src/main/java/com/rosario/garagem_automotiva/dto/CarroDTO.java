@@ -19,7 +19,7 @@ public record CarroDTO(@NotNull UUID uuid,
                        boolean vendido,
                        List<ImagemCarroDTO> imagens) {
 
-    public CarroDTO(Carro carro) {
+    public CarroDTO(Carro carro, List<ImagemCarro> imagensMongo) {
         this(
                 carro.getId(),
                 carro.getValor(),
@@ -28,7 +28,7 @@ public record CarroDTO(@NotNull UUID uuid,
                 carro.getAno(),
                 carro.getPlaca(),
                 carro.getVendido(),
-                carro.getImagens().stream()
+                imagensMongo.stream()
                         .map(ImagemCarroDTO::new)
                         .toList()
         );

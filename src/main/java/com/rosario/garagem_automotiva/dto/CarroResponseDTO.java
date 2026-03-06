@@ -1,6 +1,7 @@
 package com.rosario.garagem_automotiva.dto;
 
 import com.rosario.garagem_automotiva.entity.Carro;
+import com.rosario.garagem_automotiva.entity.ImagemCarro;
 import com.rosario.garagem_automotiva.entity.MarcaCarro;
 
 import java.math.BigDecimal;
@@ -14,14 +15,14 @@ public record CarroResponseDTO(UUID uuid,
                                int ano,
                                List<ImagemCarroDTO> imagens) {
 
-    public CarroResponseDTO(Carro carro) {
+    public CarroResponseDTO(Carro carro, List<ImagemCarro> imagensMongo) {
         this(
                 carro.getId(),
                 carro.getValor(),
                 carro.getModelo(),
                 carro.getMarcaCarro(),
                 carro.getAno(),
-                carro.getImagens().stream()
+                imagensMongo.stream()
                         .map(ImagemCarroDTO::new)
                         .toList()
         );
