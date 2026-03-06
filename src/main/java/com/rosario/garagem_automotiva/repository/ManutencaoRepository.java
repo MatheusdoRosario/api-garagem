@@ -12,5 +12,5 @@ public interface ManutencaoRepository extends JpaRepository<Manutencao, UUID> {
 
     Page<Manutencao> findByCarroId(UUID carroId, Pageable pageable);
 
-    Page<Manutencao> findByDataBetween(LocalDateTime inicio, LocalDateTime fim);
+    Page<Manutencao> findByDataBetween(LocalDateTime inicio, LocalDateTime fim, Pageable pageable);
 }
