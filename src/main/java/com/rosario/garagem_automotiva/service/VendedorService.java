@@ -1,0 +1,85 @@
+package com.rosario.garagem_automotiva.service;
+
+import com.rosario.garagem_automotiva.dto.CadastroVendedorDTO;
+import com.rosario.garagem_automotiva.dto.VendasResumoDTO;
+import com.rosario.garagem_automotiva.dto.VendedorDTO;
+import com.rosario.garagem_automotiva.entity.Carro;
+import com.rosario.garagem_automotiva.entity.Vendedor;
+import com.rosario.garagem_automotiva.exception.ValidacaoException;
+import com.rosario.garagem_automotiva.repository.CarroRepository;
+import com.rosario.garagem_automotiva.repository.VendedorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
+public class VendedorService {
+
+    @Autowired
+    private VendedorRepository vendedorRepository;
+
+    @Autowired
+    private CarroRepository carroRepository;
+
+    public Page<VendedorDTO> listarVendedores(Pageable pageable) {
+        return vendedorRepository.findByAtivo(true)
+                .map(VendedorDTO::new);
+    }
+
+    @Transactional
+    public void cadastrarVendedor(CadastroVendedorDTO dto) {
+        if (vendedorRepository.existsByTelefone(dto.telefone())){
+            throw new ValidacaoException("Telefone já cadastrado!");
+        }
+        vendedorRepository.save(new Vendedor(dto));
+    }
+
+    @Transactional
+    public void atualizarVendedor(VendedorDTO dto) {
+        if (vendedorRepository.existsByTelefoneAndIdNot(dto.telefone(), dto.id())){
+            throw new ValidacaoException("Telefone já cadastrado!");
+        }
+        Vendedor vendedor = vendedorRepository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
+        vendedor.atualizarVendedor(dto);
+    }
+
+    @Transactional
+    public void desativarVendedor(Long id) {
+        if (vendedorRepository.existsByIdAndAtivo(id, false)){
+            throw new ValidacaoException("Vendedor já desativado!");
+        }
+        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
+        vendedor.desativarVendedor(vendedor);
+    }
+
+    @Transactional
+    public void ativarVendedor(Long id) {
+        if (vendedorRepository.existsByIdAndAtivo(id, true)){
+            throw new ValidacaoException("Vendedor já ativado!");
+        }
+        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
+        vendedor.desativarVendedor(vendedor);
+    }
+
+    public VendasResumoDTO calcularVendas(Long vendedorId, LocalDate inicio, LocalDate fim) {
+        Vendedor vendedor = vendedorRepository.findById(vendedorId)
+                .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
+
+        List<Carro> carrosVendidos = carroRepository
+                .findByVendedorAndDataVendaBetween(vendedor, inicio.atStartOfDay(), fim.atTime(23,59));
+
+        int quantidade = carrosVendidos.size();
+        BigDecimal valorTotal = carrosVendidos.stream()
+                .map(Carro::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new VendasResumoDTO(quantidade, valorTotal);
+    }
+
+}

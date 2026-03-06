@@ -1,5 +1,6 @@
 package com.rosario.garagem_automotiva.dto;
 
+import com.rosario.garagem_automotiva.entity.Cliente;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -7,4 +8,8 @@ import jakarta.validation.constraints.Pattern;
 public record ClienteDTO(@NotNull Long id,
                          @NotBlank String nome,
                          @Pattern(regexp = "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$") String telefone) {
+
+    public ClienteDTO(Cliente cliente) {
+        this(cliente.getId(), cliente.getNome(), cliente.getTelefone());
+    }
 }

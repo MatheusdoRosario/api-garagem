@@ -1,6 +1,7 @@
 package com.rosario.garagem_automotiva.entity;
 
 import com.rosario.garagem_automotiva.dto.CadastroVendedorDTO;
+import com.rosario.garagem_automotiva.dto.VendedorDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class Vendedor {
 
     private String telefone;
 
+    private boolean ativo;
+
     @OneToMany(mappedBy = "vendedor", fetch = FetchType.LAZY)
     private List<Carro> carrosVendidos;
 
@@ -25,6 +28,14 @@ public class Vendedor {
     public Vendedor(CadastroVendedorDTO dto) {
         this.nome = dto.nome();
         this.telefone = dto.telefone();
+        this.ativo = true;
+    }
+
+    public void atualizarVendedor(VendedorDTO dto) {
+        this.id = dto.id();
+        this.nome = dto.nome();
+        this.telefone = dto.telefone();
+        this.ativo = dto.ativo();
     }
 
     public Long getId() {
@@ -41,5 +52,17 @@ public class Vendedor {
 
     public List<Carro> getCarrosVendidos() {
         return carrosVendidos;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void desativarVendedor(Vendedor vendedor) {
+        this.ativo = false;
+    }
+
+    public void ativarVendedor(Vendedor vendedor) {
+        this.ativo = true;
     }
 }

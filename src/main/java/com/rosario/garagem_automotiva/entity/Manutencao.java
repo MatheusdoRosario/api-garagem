@@ -1,6 +1,7 @@
 package com.rosario.garagem_automotiva.entity;
 
 import com.rosario.garagem_automotiva.dto.CadastroManutencaoDTO;
+import com.rosario.garagem_automotiva.dto.ManutencaoDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,6 +27,14 @@ public class Manutencao {
     }
 
     public Manutencao(CadastroManutencaoDTO dto) {
+        this.valor = dto.valor();
+        this.descricao = dto.descricao();
+        this.data = dto.data();
+        this.carro = dto.carro();
+    }
+
+    public void atualizarManutencao(ManutencaoDTO dto) {
+        this.id = dto.id();
         this.valor = dto.valor();
         this.descricao = dto.descricao();
         this.data = dto.data();

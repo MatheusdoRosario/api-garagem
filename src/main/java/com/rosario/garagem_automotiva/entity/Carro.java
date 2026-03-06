@@ -1,9 +1,12 @@
 package com.rosario.garagem_automotiva.entity;
 
 import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
+import com.rosario.garagem_automotiva.dto.CarroDTO;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +16,7 @@ public class Carro {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Double valor;
+    private BigDecimal valor;
 
     private String modelo;
 
@@ -26,11 +29,16 @@ public class Carro {
 
     private LocalDate dataVenda;
 
+    private Boolean vendido;
+
     @ManyToOne
     private Cliente cliente;
 
     @ManyToOne
     private Vendedor vendedor;
+
+    @OneToMany(mappedBy = "carro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ImagemCarro> imagens;
 
     public Carro() {
     }
@@ -41,13 +49,24 @@ public class Carro {
         this.marcaCarro = dto.marcaCarro();
         this.ano = dto.ano();
         this.placa = dto.placa();
+        this.vendido = false;
+    }
+
+    public void atualizarCarro(CarroDTO dto) {
+        this.id = dto.uuid();
+        this.valor = dto.valor();
+        this.modelo = dto.modelo();
+        this.marcaCarro = dto.marcaCarro();
+        this.ano = dto.ano();
+        this.placa = dto.placa();
+        this.vendido = dto.vendido();
     }
 
     public UUID getId() {
         return id;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
@@ -79,9 +98,18 @@ public class Carro {
         return vendedor;
     }
 
+    public Boolean getVendido() {
+        return vendido;
+    }
+
+    public List<ImagemCarro> getImagens() {
+        return imagens;
+    }
+
     public void marcarComoVendido(Vendedor vendedor) {
         this.vendedor = vendedor;
         this.dataVenda = LocalDate.now();
+        this.vendido = true;
     }
 
 }
