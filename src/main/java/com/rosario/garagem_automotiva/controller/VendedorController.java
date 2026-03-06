@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/v1/vendedor")
+@RequestMapping("/api/v1/vendedores")
 public class VendedorController {
 
     @Autowired

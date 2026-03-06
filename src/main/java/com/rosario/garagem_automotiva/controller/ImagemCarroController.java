@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/imagem")
+@RequestMapping("/api/v1/imagens")
 public class ImagemCarroController {
 
     @Autowired

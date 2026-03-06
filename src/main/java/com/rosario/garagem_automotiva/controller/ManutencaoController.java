@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/manutencoes")
 public class ManutencaoController {
 
     @Autowired
