@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class ClienteController {
     public ResponseEntity<String> cadastrarCliente(@RequestBody @Valid CadastroClienteDTO dto) {
         try {
             service.cadastrarCliente(dto);
-            return ResponseEntity.ok().body("Cliente cadastrado com sucesso!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso!");
         } catch (ValidacaoException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

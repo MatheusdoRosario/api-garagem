@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +58,7 @@ public class CarroController {
     public ResponseEntity<String> atualizarCarro(@RequestBody @Valid CarroDTO dto) {
         try {
             service.atualizarCarro(dto);
-            return ResponseEntity.ok().body("Carro atualizado com sucesso!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Carro atualizado com sucesso!");
         } catch (ValidacaoException e) {
             return ResponseEntity.notFound().build();
         }

@@ -22,6 +22,10 @@ spring:
       uri: mongodb://${DB_HOST}:27017
       database: garagem_imagens
 
+  web:
+    resources:
+      static-locations=classpath:/static/,file:uploads/
+
 server:
   port: 8080
 

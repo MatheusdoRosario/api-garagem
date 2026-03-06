@@ -7,6 +7,5 @@ import java.util.Map;
 import java.util.UUID;
 
 public record CadastroImagemCarroDTO(@NotNull UUID carroId,
-                                     @NotBlank String url,
-                                     Map<String, String> metadata) {
+                                     @NotBlank String url) {
 }
