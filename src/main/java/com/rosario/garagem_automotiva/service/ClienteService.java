@@ -18,7 +18,7 @@ public class ClienteService {
     private ClienteRepository repository;
 
     public Page<ClienteDTO> listarClientesPorNome(String nome, Pageable pageable) {
-        return repository.findByNome(nome, pageable)
+        return repository.findByNomeContainingIgnoreCase(nome, pageable)
                 .map(ClienteDTO::new);
     }
 

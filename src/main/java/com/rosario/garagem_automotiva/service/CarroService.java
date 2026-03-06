@@ -42,7 +42,7 @@ public class CarroService {
     }
 
     public Page<CarroResponseDTO> listarCarroPorModelo(String modelo, Pageable pageable) {
-        Page<Carro> carros = carroRepository.findByModeloAndVendido(modelo, false, pageable);
+        Page<Carro> carros = carroRepository.findByModeloContainingIgnoreCaseAndVendido(modelo, false, pageable);
 
         return carros.map(carro -> {
             List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
