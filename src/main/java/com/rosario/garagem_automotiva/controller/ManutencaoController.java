@@ -4,6 +4,7 @@ import com.rosario.garagem_automotiva.dto.CadastroManutencaoDTO;
 import com.rosario.garagem_automotiva.dto.ManutencaoDTO;
 import com.rosario.garagem_automotiva.exception.ValidacaoException;
 import com.rosario.garagem_automotiva.service.ManutencaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +35,13 @@ public class ManutencaoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrarManutencao(CadastroManutencaoDTO dto) {
+    public ResponseEntity<String> cadastrarManutencao(@RequestBody @Valid CadastroManutencaoDTO dto) {
         service.cadastrarManutencao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Manutenção criada com sucesso!");
     }
 
     @PutMapping
-    public ResponseEntity<String> atualizarManutencao(ManutencaoDTO dto) {
+    public ResponseEntity<String> atualizarManutencao(@RequestBody @Valid ManutencaoDTO dto) {
         try {
             service.atualizarManutencao(dto);
             return ResponseEntity.ok().body("Manutenção atualizada com sucesso!");
@@ -49,8 +50,8 @@ public class ManutencaoController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> excluirManutencao(UUID uuid) {
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<String> excluirManutencao(@PathVariable UUID uuid) {
         try {
             service.excluirManutencao(uuid);
             return ResponseEntity.noContent().build();
