@@ -4,10 +4,12 @@ import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroResponseDTO;
 import com.rosario.garagem_automotiva.entity.Carro;
+import com.rosario.garagem_automotiva.entity.ImagemCarro;
 import com.rosario.garagem_automotiva.entity.MarcaCarro;
 import com.rosario.garagem_automotiva.entity.Vendedor;
 import com.rosario.garagem_automotiva.exception.ValidacaoException;
 import com.rosario.garagem_automotiva.repository.CarroRepository;
+import com.rosario.garagem_automotiva.repository.ImagemCarroRepository;
 import com.rosario.garagem_automotiva.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,25 +29,43 @@ public class CarroService {
     @Autowired
     private VendedorRepository vendedorRepository;
 
-    public Page<CarroResponseDTO> listarTodos(Pageable pageable) {
-        Page<Carro> carros = carroRepository.findByVendido(false ,pageable);
+    @Autowired
+    private ImagemCarroRepository imagemCarroRepository;
 
-        return carros.map(CarroResponseDTO::new);
+    public Page<CarroResponseDTO> listarTodos(Pageable pageable) {
+        Page<Carro> carros = carroRepository.findByVendido(false, pageable);
+
+        return carros.map(carro -> {
+            List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
+            return new CarroResponseDTO(carro, imagens);
+        });
     }
 
     public Page<CarroResponseDTO> listarCarroPorModelo(String modelo, Pageable pageable) {
-        return carroRepository.findByModeloAndVendido(modelo, false, pageable)
-                .map(CarroResponseDTO::new);
+        Page<Carro> carros = carroRepository.findByModeloAndVendido(modelo, false, pageable);
+
+        return carros.map(carro -> {
+            List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
+            return new CarroResponseDTO(carro, imagens);
+        });
     }
 
     public Page<CarroResponseDTO> listarCarroPorMarca(MarcaCarro marcaCarro, Pageable pageable) {
-        return carroRepository.findByMarcaAndVendido(marcaCarro, false, pageable)
-                .map(CarroResponseDTO::new);
+        Page<Carro> carros = carroRepository.findByMarcaCarroAndVendido(marcaCarro, false, pageable);
+
+        return carros.map(carro -> {
+            List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
+            return new CarroResponseDTO(carro, imagens);
+        });
     }
 
     public Page<CarroResponseDTO> listarCarroPorAno(int ano, Pageable pageable) {
-        return carroRepository.findByAnoAndVendido(ano, false, pageable)
-                .map(CarroResponseDTO::new);
+        Page<Carro> carros = carroRepository.findByAnoAndVendido(ano, false, pageable);
+
+        return carros.map(carro -> {
+            List<ImagemCarro> imagens = imagemCarroRepository.findByCarroId(carro.getId());
+            return new CarroResponseDTO(carro, imagens);
+        });
     }
 
     @Transactional

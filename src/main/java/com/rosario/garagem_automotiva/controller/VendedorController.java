@@ -70,7 +70,7 @@ public class VendedorController {
         }
     }
 
-    @PutMapping("/desativar")
+    @PutMapping("/ativar")
     public ResponseEntity<String> ativarVendedor(@RequestBody Long id) {
         try {
             service.ativarVendedor(id);
