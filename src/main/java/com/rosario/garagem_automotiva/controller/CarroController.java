@@ -23,25 +23,25 @@ public class CarroController {
     private CarroService service;
 
     @GetMapping
-    public ResponseEntity<Page<CarroResponseDTO>> listarTodos(Pageable pageable) {
+    public ResponseEntity<Page<CarroResponseDTO>> listarTodos(@RequestBody Pageable pageable) {
         Page<CarroResponseDTO> carrosDisponiveis = service.listarTodos(pageable);
         return ResponseEntity.ok(carrosDisponiveis);
     }
 
     @GetMapping("/modelo/{modelo}")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorModelo(@PathVariable String modelo, Pageable pageable) {
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorModelo(@PathVariable String modelo, @RequestBody Pageable pageable) {
             Page<CarroResponseDTO> carrosPorModelo = service.listarCarroPorModelo(modelo, pageable);
             return ResponseEntity.ok(carrosPorModelo);
     }
 
     @GetMapping("/marca/{marcaCarro}")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorMarca(@PathVariable MarcaCarro marcaCarro, Pageable pageable) {
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorMarca(@PathVariable MarcaCarro marcaCarro, @RequestBody Pageable pageable) {
             Page<CarroResponseDTO> carrosPorMarca = service.listarCarroPorMarca(marcaCarro, pageable);
             return ResponseEntity.ok(carrosPorMarca);
     }
 
     @GetMapping("/ano/{ano}")
-    public ResponseEntity<Page<CarroResponseDTO>> listarPorAno(@PathVariable int ano, Pageable pageable) {
+    public ResponseEntity<Page<CarroResponseDTO>> listarPorAno(@PathVariable int ano, @RequestBody Pageable pageable) {
             Page<CarroResponseDTO> carrosPorAno = service.listarCarroPorAno(ano, pageable);
             return ResponseEntity.ok(carrosPorAno);
     }
