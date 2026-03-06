@@ -29,9 +29,9 @@ public class VendedorController {
     }
 
     @GetMapping("/vendas")
-    public ResponseEntity<VendasResumoDTO> listarResumoDeVendasPorVendedor(@RequestBody Long vendedorId,
-                                                                           @RequestBody LocalDate inicio,
-                                                                           @RequestBody LocalDate fim) {
+    public ResponseEntity<VendasResumoDTO> listarResumoDeVendasPorVendedor(@RequestParam Long vendedorId,
+                                                                           @RequestParam LocalDate inicio,
+                                                                           @RequestParam LocalDate fim) {
         try {
             VendasResumoDTO vendasResumo = service.calcularVendas(vendedorId, inicio, fim);
             return ResponseEntity.ok(vendasResumo);

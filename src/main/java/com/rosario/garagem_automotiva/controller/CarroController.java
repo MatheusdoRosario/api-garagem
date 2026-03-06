@@ -3,6 +3,7 @@ package com.rosario.garagem_automotiva.controller;
 import com.rosario.garagem_automotiva.dto.CadastroCarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroDTO;
 import com.rosario.garagem_automotiva.dto.CarroResponseDTO;
+import com.rosario.garagem_automotiva.dto.VenderCarroDTO;
 import com.rosario.garagem_automotiva.entity.MarcaCarro;
 import com.rosario.garagem_automotiva.exception.ValidacaoException;
 import com.rosario.garagem_automotiva.service.CarroService;
@@ -64,9 +65,9 @@ public class CarroController {
     }
 
     @PutMapping("/vender")
-    public ResponseEntity<String> marcarComoVendido(@RequestBody @Valid UUID carroId, @RequestBody @Valid Long vendedorId) {
+    public ResponseEntity<String> marcarComoVendido(@RequestBody @Valid VenderCarroDTO dto) {
         try {
-            service.marcarComoVendido(carroId, vendedorId);
+            service.marcarComoVendido(dto.carroId(), dto.vendedorId());
             return ResponseEntity.ok().body("Carro vendido!");
         } catch (ValidacaoException e) {
             return ResponseEntity.notFound().build();
