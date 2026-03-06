@@ -32,6 +32,21 @@ public class VendedorService {
                 .map(VendedorDTO::new);
     }
 
+    public VendasResumoDTO calcularVendas(Long vendedorId, LocalDate inicio, LocalDate fim) {
+        Vendedor vendedor = vendedorRepository.findById(vendedorId)
+                .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
+
+        List<Carro> carrosVendidos = carroRepository
+                .findByVendedorAndDataVendaBetween(vendedor, inicio.atStartOfDay(), fim.atTime(23,59));
+
+        int quantidade = carrosVendidos.size();
+        BigDecimal valorTotal = carrosVendidos.stream()
+                .map(Carro::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new VendasResumoDTO(quantidade, valorTotal);
+    }
+
     @Transactional
     public void cadastrarVendedor(CadastroVendedorDTO dto) {
         if (vendedorRepository.existsByTelefone(dto.telefone())){
@@ -65,21 +80,6 @@ public class VendedorService {
         }
         Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
         vendedor.desativarVendedor(vendedor);
-    }
-
-    public VendasResumoDTO calcularVendas(Long vendedorId, LocalDate inicio, LocalDate fim) {
-        Vendedor vendedor = vendedorRepository.findById(vendedorId)
-                .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
-
-        List<Carro> carrosVendidos = carroRepository
-                .findByVendedorAndDataVendaBetween(vendedor, inicio.atStartOfDay(), fim.atTime(23,59));
-
-        int quantidade = carrosVendidos.size();
-        BigDecimal valorTotal = carrosVendidos.stream()
-                .map(Carro::getValor)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return new VendasResumoDTO(quantidade, valorTotal);
     }
 
 }
