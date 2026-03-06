@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class VendedorController {
 
     @GetMapping("/vendas")
     public ResponseEntity<VendasResumoDTO> listarResumoDeVendasPorVendedor(@RequestParam Long vendedorId,
-                                                                           @RequestParam LocalDate inicio,
-                                                                           @RequestParam LocalDate fim) {
+                                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+                                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim) {
         try {
             VendasResumoDTO vendasResumo = service.calcularVendas(vendedorId, inicio, fim);
             return ResponseEntity.ok(vendasResumo);
@@ -60,8 +61,8 @@ public class VendedorController {
         }
     }
 
-    @PutMapping("/desativar")
-    public ResponseEntity<String> desativarVendedor(@RequestBody Long id) {
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<String> desativarVendedor(@PathVariable Long id) {
         try {
             service.desativarVendedor(id);
             return ResponseEntity.ok().body("Vendedor desativado com sucesso!");
@@ -70,8 +71,8 @@ public class VendedorController {
         }
     }
 
-    @PutMapping("/ativar")
-    public ResponseEntity<String> ativarVendedor(@RequestBody Long id) {
+    @PutMapping("/ativar/{id}")
+    public ResponseEntity<String> ativarVendedor(@PathVariable Long id) {
         try {
             service.ativarVendedor(id);
             return ResponseEntity.ok().body("Vendedor ativado com sucesso!");
