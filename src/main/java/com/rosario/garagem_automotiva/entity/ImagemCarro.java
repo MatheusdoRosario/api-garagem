@@ -4,6 +4,7 @@ import com.rosario.garagem_automotiva.dto.CadastroImagemCarroDTO;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,9 @@ public class ImagemCarro {
     private String url;
     private LocalDateTime uploadDate;
     private Map<String, String> metadata;
+
+    @ManyToOne
+    private Carro carro;
 
     public ImagemCarro() {
     }
@@ -49,5 +53,9 @@ public class ImagemCarro {
 
     public Map<String, String> getMetadata() {
         return metadata;
+    }
+
+    public Carro getCarro() {
+        return carro;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -29,15 +30,18 @@ public class ManutencaoService {
                 .map(ManutencaoDTO::new);
     }
 
+    @Transactional
     public void cadastrarManutencao(CadastroManutencaoDTO dto) {
         repository.save(new Manutencao(dto));
     }
 
+    @Transactional
     public void atualizarManutencao(ManutencaoDTO dto){
         Manutencao manutencao = repository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Manutencão não encontrada!"));
         manutencao.atualizarManutencao(dto);
     }
 
+    @Transactional
     public void excluirManutencao(UUID uuid) {
         if (!repository.existsById(uuid)) {
             throw new ValidacaoException("Manutenção não encontrada!");

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteService {
@@ -26,6 +27,7 @@ public class ClienteService {
                 .map(ClienteDTO::new);
     }
 
+    @Transactional
     public void cadastrarCliente(CadastroClienteDTO dto) {
         if (repository.existsByTelefone(dto.telefone())) {
             throw new ValidacaoException("Telefone já cadastrado");
@@ -33,6 +35,7 @@ public class ClienteService {
         repository.save(new Cliente(dto));
     }
 
+    @Transactional
     public void atualizarCliente(ClienteDTO dto) {
         if (repository.existsByTelefone(dto.telefone())) {
             throw new ValidacaoException("Telefone já cadastrado");
