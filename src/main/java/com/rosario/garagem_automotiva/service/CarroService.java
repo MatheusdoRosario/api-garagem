@@ -32,17 +32,17 @@ public class CarroService {
         return carros.map(CarroResponseDTO::new);
     }
 
-    public Page<CarroResponseDTO> ListarCarroPorModelo(String modelo, Pageable pageable) {
+    public Page<CarroResponseDTO> listarCarroPorModelo(String modelo, Pageable pageable) {
         return carroRepository.findByModeloAndVendido(modelo, false, pageable)
                 .map(CarroResponseDTO::new);
     }
 
-    public Page<CarroResponseDTO> ListarCarroPorMarca(MarcaCarro marcaCarro, Pageable pageable) {
+    public Page<CarroResponseDTO> listarCarroPorMarca(MarcaCarro marcaCarro, Pageable pageable) {
         return carroRepository.findByMarcaAndVendido(marcaCarro, false, pageable)
                 .map(CarroResponseDTO::new);
     }
 
-    public Page<CarroResponseDTO> ListarCarroPorAno(int ano, Pageable pageable) {
+    public Page<CarroResponseDTO> listarCarroPorAno(int ano, Pageable pageable) {
         return carroRepository.findByAnoAndVendido(ano, false, pageable)
                 .map(CarroResponseDTO::new);
     }
