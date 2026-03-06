@@ -1,7 +1,6 @@
 package com.rosario.garagem_automotiva.controller;
 
 import com.rosario.garagem_automotiva.dto.CadastroImagemCarroDTO;
-import com.rosario.garagem_automotiva.dto.ImagemCarroDTO;
 import com.rosario.garagem_automotiva.exception.ValidacaoException;
 import com.rosario.garagem_automotiva.service.ImagemCarroService;
 import com.rosario.garagem_automotiva.service.StorageService;
@@ -9,17 +8,14 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/imagem")
+@RequestMapping("/api/v1/imagem")
 public class ImagemCarroController {
 
     @Autowired
@@ -40,7 +36,8 @@ public class ImagemCarroController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Imagem salva com sucesso! URL: " + url);
     }
 
-    public ResponseEntity<String> excluirImagem(UUID uuid) {
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<String> excluirImagem(@PathVariable UUID uuid) {
         try {
             service.excluirImagem(uuid);
             return ResponseEntity.noContent().build();
