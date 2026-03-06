@@ -17,12 +17,12 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public Page<ClienteDTO> buscarClientePorNome(String nome, Pageable pageable) {
+    public Page<ClienteDTO> listarClientesPorNome(String nome, Pageable pageable) {
         return repository.findByNome(nome, pageable)
                 .map(ClienteDTO::new);
     }
 
-    public Page<ClienteDTO> buscarClientePorTelefone(String telefone, Pageable pageable) {
+    public Page<ClienteDTO> listarClientesPorTelefone(String telefone, Pageable pageable) {
         return repository.findByTelefone(telefone, pageable)
                 .map(ClienteDTO::new);
     }
