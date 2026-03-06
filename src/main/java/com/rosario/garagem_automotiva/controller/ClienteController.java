@@ -20,13 +20,13 @@ public class ClienteController {
     private ClienteService service;
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<Page<ClienteDTO>> listarClientePorNome(@PathVariable String nome, @RequestBody Pageable pageable) {
+    public ResponseEntity<Page<ClienteDTO>> listarClientePorNome(@PathVariable String nome, Pageable pageable) {
         Page<ClienteDTO> clientes = service.listarClientesPorNome(nome, pageable);
         return ResponseEntity.ok(clientes);
     }
 
     @GetMapping("/telefone/{telefone}")
-    public ResponseEntity<Page<ClienteDTO>> listarClientePorTelefone(@PathVariable String telefone, @RequestBody Pageable pageable) {
+    public ResponseEntity<Page<ClienteDTO>> listarClientePorTelefone(@PathVariable String telefone, Pageable pageable) {
         Page<ClienteDTO> clientes = service.listarClientesPorTelefone(telefone, pageable);
         return ResponseEntity.ok(clientes);
     }

@@ -23,7 +23,7 @@ public class VendedorController {
     private VendedorService service;
 
     @GetMapping
-    public ResponseEntity<Page<VendedorDTO>> listarVendedores(@RequestBody Pageable pageable) {
+    public ResponseEntity<Page<VendedorDTO>> listarVendedores(Pageable pageable) {
         Page<VendedorDTO> vendedores = service.listarVendedores(pageable);
         return ResponseEntity.ok(vendedores);
     }
