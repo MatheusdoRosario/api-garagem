@@ -28,7 +28,9 @@ public class ImagemCarroService {
 
     @Transactional
     public void excluirImagem(UUID uuid) {
-        imagemCarroRepository.findById(uuid).orElseThrow(() -> new ValidacaoException("Imagem não encontrada!"));
+        if (!imagemCarroRepository.existsById(uuid)) {
+            throw new ValidacaoException("Imagem não encontrada!");
+        }
         imagemCarroRepository.deleteById(uuid);
     }
 
