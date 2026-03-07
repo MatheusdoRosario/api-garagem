@@ -60,7 +60,7 @@ class ImagemCarroServiceTest {
 
     @Test
     void deveExcluirImagemSemErro() {
-        when(imagemCarroRepository.findById(any(UUID.class))).thenReturn(Optional.of(imagemCarro));
+        when(imagemCarroRepository.existsById(any(UUID.class))).thenReturn(true);
 
         service.excluirImagem(UUID.randomUUID());
 
@@ -69,7 +69,7 @@ class ImagemCarroServiceTest {
 
     @Test
     void naoDeveExcluirImagemDeCarroInexistente() {
-        when(imagemCarroRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+        when(imagemCarroRepository.existsById(any(UUID.class))).thenReturn(false);
 
         Assertions.assertThrows(ValidacaoException.class, () -> service.excluirImagem(UUID.randomUUID()));
     }

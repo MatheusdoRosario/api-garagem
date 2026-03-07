@@ -13,7 +13,15 @@ import java.util.UUID;
 @Service
 public class StorageService {
 
-    private final Path root = Paths.get("uploads");
+    private final Path root;
+
+    public StorageService() {
+        this.root = Paths.get("uploads");
+    }
+
+    public StorageService(Path root) {
+        this.root = root;
+    }
 
     public String salvarArquivo(MultipartFile file) throws IOException {
         if (!Files.exists(root)) {

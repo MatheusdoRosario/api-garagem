@@ -5,13 +5,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class StorageServiceTest {
@@ -21,51 +23,28 @@ class StorageServiceTest {
 
     @Test
     void deveSalvarImagemSemErro() throws IOException {
-        StorageService service = new StorageService() {
-            private final Path root = tempDir;
-
-            public String salvarArquivo(MockMultipartFile file) throws IOException {
-                if (!Files.exists(root)) {
-                    Files.createDirectories(root);
-                }
-                String nomeArquivo = "teste-" + file.getOriginalFilename();
-                Path destino = root.resolve(nomeArquivo);
-                Files.copy(file.getInputStream(), destino);
-                return destino.toString();
-            }
-        };
+        StorageService service = new StorageService(tempDir);
         MockMultipartFile file = new MockMultipartFile(
                 "file", "exemplo.txt", "text/plain", "conteúdo de teste".getBytes()
         );
         String caminho = service.salvarArquivo(file);
+        String nomeArquivo = caminho.substring(caminho.lastIndexOf("/") + 1);
+        Path destino = tempDir.resolve(nomeArquivo);
 
-        Path destino = Path.of(caminho);
         assertTrue(Files.exists(destino));
         assertEquals("conteúdo de teste", Files.readString(destino));
+
     }
 
+    @Test
     void naoDeveSalvarArquivoComErroDeInputStream() throws IOException {
-        MockMultipartFile file = new MockMultipartFile(
-                "file",
-                "falha.txt",
-                "text/plain",
-                new InputStream() {
-                    @Override
-                    public int read() throws IOException {
-                        throw new IOException("Erro simulado no InputStream");
-                    }
-                }
-        );
+        MultipartFile file = mock(MultipartFile.class);
+        when(file.getOriginalFilename()).thenReturn("falha.txt");
+        when(file.getInputStream()).thenThrow(new IOException("Erro simulado"));
 
-        StorageService service = new StorageService() {
-            private final Path root = tempDir;
-            public String salvarArquivo(MockMultipartFile f) throws IOException {
-                return super.salvarArquivo(f);
-            }
-        };
+        StorageService service = new StorageService(tempDir);
 
-        assertThrows(IOException.class, () -> service.salvarArquivo(file));
-    }
+        assertThrows(IOException.class, () -> service.salvarArquivo(file));    }
 
 
 }
