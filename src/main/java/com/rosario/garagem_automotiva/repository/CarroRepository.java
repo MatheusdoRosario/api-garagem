@@ -21,7 +21,7 @@ public interface CarroRepository extends JpaRepository<Carro, UUID> {
 
     Page<Carro> findByVendido(boolean vendido, Pageable pageable);
 
-    List<Carro> findByVendedorAndDataVendaBetween(Vendedor vendedor, LocalDate inicio, LocalDate fim);
+    List<Carro> findByVendedorIdAndDataVendaBetween(Long id, LocalDate inicio, LocalDate fim);
 
 
 }
