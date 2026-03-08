@@ -22,7 +22,7 @@ public class ManutencaoController {
     @Autowired
     private ManutencaoService service;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{carroId}")
     public ResponseEntity<Page<ManutencaoDTO>> listarPorCarroId(@PathVariable UUID carroId, Pageable pageable) {
         Page<ManutencaoDTO> manutencoes = service.listarManutencoesPorCarroId(carroId, pageable);
         return ResponseEntity.ok(manutencoes);
