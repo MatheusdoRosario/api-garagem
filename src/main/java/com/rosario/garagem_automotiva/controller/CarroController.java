@@ -49,14 +49,14 @@ public class CarroController {
     @PostMapping
     public ResponseEntity<String> cadastrarCarro(@RequestBody @Valid CadastroCarroDTO dto) {
         service.cadastrarCarro(dto);
-        return ResponseEntity.ok().body("Carro cadastrado com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Carro cadastrado com sucesso!");
     }
 
     @PutMapping
     public ResponseEntity<String> atualizarCarro(@RequestBody @Valid CarroDTO dto) {
         try {
             service.atualizarCarro(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Carro atualizado com sucesso!");
+            return ResponseEntity.ok().body("Carro atualizado com sucesso!");
         } catch (ValidacaoException e) {
             return ResponseEntity.notFound().build();
         }

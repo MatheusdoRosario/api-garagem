@@ -33,11 +33,11 @@ public class VendedorService {
     }
 
     public VendasResumoDTO calcularVendas(Long vendedorId, LocalDate inicio, LocalDate fim) {
-        Vendedor vendedor = vendedorRepository.findById(vendedorId)
-                .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
+        vendedorRepository.findById(vendedorId)
+                .orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
 
         List<Carro> carrosVendidos = carroRepository
-                .findByVendedorAndDataVendaBetween(vendedor, inicio, fim);
+                .findByVendedorIdAndDataVendaBetween(vendedorId, inicio, fim);
 
         int quantidade = carrosVendidos.size();
         BigDecimal valorTotal = carrosVendidos.stream()
@@ -66,19 +66,19 @@ public class VendedorService {
 
     @Transactional
     public void desativarVendedor(Long id) {
-        if (vendedorRepository.existsByIdAndAtivo(id, false)){
+        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
+        if (!vendedor.isAtivo()){
             throw new ValidacaoException("Vendedor já desativado!");
         }
-        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
         vendedor.desativarVendedor(vendedor);
     }
 
     @Transactional
     public void ativarVendedor(Long id) {
-        if (vendedorRepository.existsByIdAndAtivo(id, true)){
+        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
+        if (vendedor.isAtivo()){
             throw new ValidacaoException("Vendedor já ativado!");
         }
-        Vendedor vendedor = vendedorRepository.findById(id).orElseThrow(() -> new ValidacaoException("Vendedor não encontrado"));
         vendedor.ativarVendedor(vendedor);
     }
 

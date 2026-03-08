@@ -2,7 +2,6 @@ package com.rosario.garagem_automotiva.repository;
 
 import com.rosario.garagem_automotiva.entity.Carro;
 import com.rosario.garagem_automotiva.entity.MarcaCarro;
-import com.rosario.garagem_automotiva.entity.Vendedor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +20,7 @@ public interface CarroRepository extends JpaRepository<Carro, UUID> {
 
     Page<Carro> findByVendido(boolean vendido, Pageable pageable);
 
-    List<Carro> findByVendedorAndDataVendaBetween(Vendedor vendedor, LocalDate inicio, LocalDate fim);
+    List<Carro> findByVendedorIdAndDataVendaBetween(Long id, LocalDate inicio, LocalDate fim);
 
 
 }

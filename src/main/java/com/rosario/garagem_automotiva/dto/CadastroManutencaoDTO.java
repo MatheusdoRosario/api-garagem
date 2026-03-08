@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public record CadastroManutencaoDTO(@NotNull int valor,
                                     @NotBlank String descricao,
-                                    @NotBlank LocalDate data,
+                                    @NotNull LocalDate data,
                                     @NotNull Carro carro) {
 }

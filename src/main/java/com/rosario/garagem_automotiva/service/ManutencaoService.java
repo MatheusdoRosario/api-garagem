@@ -26,7 +26,7 @@ public class ManutencaoService {
     }
 
     public Page<ManutencaoDTO> listarManutencoesPorUmPeriodo(LocalDate inicio, LocalDate fim, Pageable pageable) {
-        return repository.findByDataBetween(inicio.atStartOfDay(), fim.atTime(23,59), pageable)
+        return repository.findByDataBetween(inicio, fim, pageable)
                 .map(ManutencaoDTO::new);
     }
 

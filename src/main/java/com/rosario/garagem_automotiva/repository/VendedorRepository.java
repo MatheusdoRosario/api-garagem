@@ -9,8 +9,6 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
     Page<Vendedor> findByAtivo(boolean ativo, Pageable pageable);
 
-    Boolean existsByIdAndAtivo(Long id, boolean ativo);
-
     Boolean existsByTelefone(String telefone);
 
     Boolean existsByTelefoneAndIdNot(String telefone, Long id);

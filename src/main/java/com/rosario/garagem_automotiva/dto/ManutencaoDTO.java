@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record ManutencaoDTO(@NotBlank UUID id,
+public record ManutencaoDTO(@NotNull UUID id,
                             @NotNull int valor,
                             @NotBlank String descricao,
-                            @NotBlank LocalDate data,
+                            @NotNull LocalDate data,
                             @NotNull Carro carro) {
 
     public ManutencaoDTO(Manutencao manutencao) {
