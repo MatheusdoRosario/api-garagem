@@ -27,8 +27,12 @@ public class Cliente {
     }
 
     public void atualizarCliente(ClienteDTO dto) {
-        this.nome = dto.nome();
-        this.telefone = dto.telefone();
+        if (dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if (dto.nome() != null) {
+            this.telefone = dto.telefone();
+        }
     }
 
     public Long getId() {

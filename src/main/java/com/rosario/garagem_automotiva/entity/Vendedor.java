@@ -32,10 +32,16 @@ public class Vendedor {
     }
 
     public void atualizarVendedor(VendedorDTO dto) {
-        this.id = dto.id();
-        this.nome = dto.nome();
-        this.telefone = dto.telefone();
-        this.ativo = dto.ativo();
+        if (dto.nome() != null) {
+            this.nome = dto.nome();
+        }
+        if (dto.telefone() != null) {
+            this.telefone = dto.telefone();
+        }
+        if (dto.ativo() != null) {
+            this.ativo = dto.ativo();
+        }
+
     }
 
     public Long getId() {

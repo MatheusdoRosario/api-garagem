@@ -49,13 +49,24 @@ public class Carro {
     }
 
     public void atualizarCarro(CarroDTO dto) {
-        this.id = dto.uuid();
-        this.valor = dto.valor();
-        this.modelo = dto.modelo();
-        this.marcaCarro = dto.marcaCarro();
-        this.ano = dto.ano();
-        this.placa = dto.placa();
-        this.vendido = dto.vendido();
+        if (dto.valor() != null) {
+            this.valor = dto.valor();
+        }
+        if (dto.modelo() != null) {
+            this.modelo = dto.modelo();
+        }
+        if (dto.marcaCarro() != null) {
+            this.marcaCarro = dto.marcaCarro();
+        }
+        if (dto.ano() != null) {
+            this.ano = dto.ano();
+        }
+        if (dto.placa() != null) {
+            this.placa = dto.placa();
+        }
+        if (dto.vendido() != null) {
+            this.vendido = dto.vendido();
+        }
     }
 
     public UUID getId() {
