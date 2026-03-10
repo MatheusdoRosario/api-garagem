@@ -34,11 +34,19 @@ public class Manutencao {
     }
 
     public void atualizarManutencao(ManutencaoDTO dto) {
-        this.id = dto.id();
-        this.valor = dto.valor();
-        this.descricao = dto.descricao();
-        this.data = dto.data();
-        this.carro = dto.carro();
+        if (dto.valor() != null) {
+            this.valor = dto.valor();
+        }
+        if (dto.descricao() != null) {
+            this.descricao = dto.descricao();
+        }
+        if (dto.data() != null) {
+            this.data = dto.data();
+        }
+        if (dto.carro() != null) {
+            this.carro = dto.carro();
+        }
+
     }
 
     public UUID getId() {

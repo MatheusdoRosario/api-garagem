@@ -14,9 +14,9 @@ public record CarroDTO(@NotNull UUID uuid,
                        @NotNull BigDecimal valor,
                        @NotBlank String modelo,
                        @NotNull MarcaCarro marcaCarro,
-                       @NotNull int ano,
+                       @NotNull Integer ano,
                        @NotBlank String placa,
-                       boolean vendido,
+                       Boolean vendido,
                        List<ImagemCarroDTO> imagens) {
 
     public CarroDTO(Carro carro, List<ImagemCarro> imagensMongo) {
